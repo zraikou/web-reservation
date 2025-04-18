@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Golden Aesthetics</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Add SheetJS library -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <a href="index.html" class="logo">Golden Aesthetics</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="booking.html">Book Appointment</a></li>
+          <li><a href="admin.html" class="active">Admin</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="admin-section">
+      <div class="container">
+        <div class="admin-header">
+          <div class="admin-title">
+            <h1>Admin Dashboard</h1>
+            <p>Manage all appointment bookings</p>
+          </div>
+          <div class="admin-actions">
+            <div class="export-group">
+              <button id="exportExcel" class="btn btn-outline">Export Excel</button>
+              <button id="exportXML" class="btn btn-outline">Export XML</button>
+            </div>
+            <button id="importXMLBtn" class="btn btn-outline">Import XML</button>
+            <input type="file" id="importXML" accept=".xml" style="display: none;">
+            <button id="clearAppointments" class="btn btn-danger">Clear All</button>
+          </div>
+        </div>
+
+        <div class="admin-panel">
+          <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search by name, email or service...">
+          </div>
+
+          <div id="appointmentsTable" class="table-container">
+            <!-- Table will be generated dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Golden Aesthetics</h3>
+          <p>Expert aesthetic treatments tailored to enhance your unique features.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Email: contact@goldenaesthetics.com</p>
+          <p>Phone: (555) 123-4567</p>
+        </div>
+        <div class="footer-section">
+          <h3>Hours</h3>
+          <p>Monday - Friday: 9am - 7pm</p>
+          <p>Saturday: 10am - 4pm</p>
+          <p>Sunday: Closed</p>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Golden Aesthetics. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="notification" class="notification">
+    <div class="notification-content">
+      <p id="notificationMessage"></p>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
