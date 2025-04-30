@@ -22,11 +22,18 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: var(--font-body);
   color: var(--color-text);
   line-height: 1.6;
   background-color: var(--color-secondary);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -486,7 +493,9 @@ a {
 footer {
   background-color: #1a1a1a;
   color: #fff;
-  padding: 4rem 0 2rem;
+  padding: 3rem 0 1rem;
+  margin-top: auto;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .footer-content {
@@ -653,6 +662,117 @@ footer {
 .booking-info li {
   margin-bottom: 0.5rem;
   color: #555;
+}
+
+/* Price List Section */
+.price-list-section {
+  margin: 3rem 0;
+  padding: 2rem;
+  background-color: var(--color-white);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.price-list-section h2 {
+  text-align: center;
+  color: var(--color-primary-dark);
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.price-list-section .section-subtitle {
+  text-align: center;
+  color: var(--color-danger);
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.price-category {
+  margin-bottom: 2.5rem;
+}
+
+.price-category h3 {
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.price-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-name {
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+}
+
+.price-details {
+  text-align: right;
+  margin-left: 1rem;
+}
+
+.regular-price {
+  display: block;
+  text-decoration: line-through;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.promo-price {
+  display: block;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.price-note {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: rgba(212, 175, 55, 0.1);
+  border-radius: 8px;
+}
+
+.price-note p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.price-note p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .price-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .price-list-section {
+    padding: 1.5rem;
+  }
+  
+  .price-item {
+    padding: 0.75rem;
+  }
 }
 
 /* Admin Page */
@@ -1035,4 +1155,9 @@ footer {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+main {
+  flex: 1 0 auto;
+  padding-top: 80px; /* Account for fixed navbar */
 }

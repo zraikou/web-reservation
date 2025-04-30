@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Golden Aesthetics</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--color-secondary);
+      padding: 2rem;
+    }
+
+    .login-box {
+      background-color: var(--color-white);
+      padding: 3rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-box h1 {
+      color: var(--color-primary);
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .login-form .form-group {
+      text-align: left;
+    }
+
+    .login-form input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+    }
+
+    .login-form input:focus {
+      border-color: var(--color-primary);
+      outline: none;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .login-btn:hover {
+      background-color: var(--color-primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .error-message {
+      color: var(--color-danger);
+      margin-top: 1rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h1>Admin Login</h1>
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="login-btn">Login</button>
+        <div id="errorMessage" class="error-message">Invalid credentials</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      // Simple authentication (in a real app, this would be handled server-side)
+      if (username === 'admin' && password === 'admin123') {
+        // Store authentication status
+        localStorage.setItem('isAuthenticated', 'true');
+        // Redirect to admin page
+        window.location.href = 'admin.html';
+      } else {
+        document.getElementById('errorMessage').style.display = 'block';
+      }
+    });
+
+    // Check if already authenticated
+    if (localStorage.getItem('isAuthenticated') === 'true') {
+      window.location.href = 'admin.html';
+    }
+  </script>
+</body>
+</html> 

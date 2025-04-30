@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,8 +25,8 @@
     <section class="booking-section">
       <div class="container">
         <div class="booking-header">
-          <h1>Book Your Appointment</h1>
-          <p>Fill out the form below to schedule your consultation with our experts.</p>
+          <h1>Book Appointment</h1>
+          <p>Fill out the form below to schedule customer's reservation</p>
         </div>
 
         <div class="booking-form-container">
@@ -53,14 +52,60 @@
               <label for="service">Service</label>
               <select id="service" name="service" required>
                 <option value="" disabled selected>Select a service</option>
-                <option value="Facial Treatment">Facial Treatment</option>
-                <option value="Botox">Botox</option>
-                <option value="Dermal Fillers">Dermal Fillers</option>
-                <option value="Laser Hair Removal">Laser Hair Removal</option>
-                <option value="Chemical Peel">Chemical Peel</option>
-                <option value="Microdermabrasion">Microdermabrasion</option>
-                <option value="Lip Enhancement">Lip Enhancement</option>
-                <option value="Eyebrow Microblading">Eyebrow Microblading</option>
+                <!-- Facial Treatments -->
+                <optgroup label="Facial Treatments">
+                  <option value="Facial Treatments - Hypoallergenic Facial">Facial Treatments - Hypoallergenic Facial</option>
+                  <option value="Facial Treatments - Premium Whitening Facial">Facial Treatments - Premium Whitening Facial</option>
+                  <option value="Facial Treatments - Premium Age-Defy Facial">Facial Treatments - Premium Age-Defy Facial</option>
+                  <option value="Facial Treatments - Luxe Brightening Facial">Facial Treatments - Luxe Brightening Facial</option>
+                  <option value="Facial Treatments - Luxe Acne-Clear Facial">Facial Treatments - Luxe Acne-Clear Facial</option>
+                  <option value="Facial Treatments - Luxe Rejuvenation Facial">Facial Treatments - Luxe Rejuvenation Facial</option>
+                  <option value="Facial Treatments - Hydra-Oxyderm Facial">Facial Treatments - Hydra-Oxyderm Facial</option>
+                  <option value="Facial Treatments - Signature Golden Facial">Facial Treatments - Signature Golden Facial</option>
+                </optgroup>
+                <!-- Pico & Carbon Laser -->
+                <optgroup label="Pico & Carbon Laser">
+                  <option value="Pico & Carbon Laser - Acne Spot Pico Frosting">Pico & Carbon Laser - Acne Spot Pico Frosting</option>
+                  <option value="Pico & Carbon Laser - Black Doll Face">Pico & Carbon Laser - Black Doll Face</option>
+                  <option value="Pico & Carbon Laser - UA Carbon Laser Peel">Pico & Carbon Laser - UA Carbon Laser Peel</option>
+                  <option value="Pico & Carbon Laser - Black Carbon Laser Peel">Pico & Carbon Laser - Black Carbon Laser Peel</option>
+                  <option value="Pico & Carbon Laser - Elbow Pico White">Pico & Carbon Laser - Elbow Pico White</option>
+                  <option value="Pico & Carbon Laser - Knee Carbon Peel">Pico & Carbon Laser - Knee Carbon Peel</option>
+                  <option value="Pico & Carbon Laser - Butt Carbon Peel">Pico & Carbon Laser - Butt Carbon Peel</option>
+                  <option value="Pico & Carbon Laser - Tattoo Laser Removal">Pico & Carbon Laser - Tattoo Laser Removal</option>
+                </optgroup>
+                <!-- IV Treatments -->
+                <optgroup label="IV Treatments">
+                  <option value="IV Treatments - Opal Teen">IV Treatments - Opal Teen</option>
+                  <option value="IV Treatments - Placenta">IV Treatments - Placenta</option>
+                  <option value="IV Treatments - Collagen">IV Treatments - Collagen</option>
+                  <option value="IV Treatments - Vitamin C">IV Treatments - Vitamin C</option>
+                  <option value="IV Treatments - Vitamin B-Complex">IV Treatments - Vitamin B-Complex</option>
+                  <option value="IV Treatments - Slimming L-Carnitine">IV Treatments - Slimming L-Carnitine</option>
+                  <option value="IV Treatments - Topaz Ultra Detox">IV Treatments - Topaz Ultra Detox</option>
+                  <option value="IV Treatments - Sapphire Bright">IV Treatments - Sapphire Bright</option>
+                  <option value="IV Treatments - Ruby Rose White">IV Treatments - Ruby Rose White</option>
+                  <option value="IV Treatments - Jade Anti-Aging">IV Treatments - Jade Anti-Aging</option>
+                  <option value="IV Treatments - Diamond Clear">IV Treatments - Diamond Clear</option>
+                  <option value="IV Treatments - Emerald Premium">IV Treatments - Emerald Premium</option>
+                  <option value="IV Treatments - Pearl White">IV Treatments - Pearl White</option>
+                  <option value="IV Treatments - Premium Golden White">IV Treatments - Premium Golden White</option>
+                </optgroup>
+                <!-- Exiprolift Treatments -->
+                <optgroup label="Exiprolift Treatments">
+                  <option value="Exiprolift Treatments - Face">Exiprolift Treatments - Face</option>
+                  <option value="Exiprolift Treatments - Neck">Exiprolift Treatments - Neck</option>
+                  <option value="Exiprolift Treatments - Arms">Exiprolift Treatments - Arms</option>
+                  <option value="Exiprolift Treatments - Abdomen">Exiprolift Treatments - Abdomen</option>
+                  <option value="Exiprolift Treatments - Back">Exiprolift Treatments - Back</option>
+                </optgroup>
+                <!-- HIFU Treatments -->
+                <optgroup label="HIFU Treatments">
+                  <option value="HIFU Treatments - Face + Neck (7D HIFU)">HIFU Treatments - Face + Neck (7D HIFU)</option>
+                  <option value="HIFU Treatments - Face + Neck (Classic HIFU)">HIFU Treatments - Face + Neck (Classic HIFU)</option>
+                  <option value="HIFU Treatments - Whole Body (7D HIFU)">HIFU Treatments - Whole Body (7D HIFU)</option>
+                  <option value="HIFU Treatments - Whole Body (Classic HIFU)">HIFU Treatments - Whole Body (Classic HIFU)</option>
+                </optgroup>
               </select>
             </div>
 
@@ -98,10 +143,7 @@
         <div class="booking-info">
           <h3>Important Information</h3>
           <ul>
-            <li>Appointments can be rescheduled up to 24 hours before the scheduled time.</li>
-            <li>Please arrive 15 minutes before your appointment time for registration.</li>
-            <li>A consultation fee may apply for certain services.</li>
-            <li>For certain treatments, a patch test may be required 48 hours before your appointment.</li>
+            <li>Use this form to appoint booking from the customers.</li>
           </ul>
         </div>
       </div>

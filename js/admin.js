@@ -196,6 +196,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const exportXMLBtn = document.getElementById('exportXML');
   const exportExcelBtn = document.getElementById('exportExcel');
   const clearAppointmentsBtn = document.getElementById('clearAppointments');
+  const editForm = document.getElementById('editForm');
+  const editModal = document.getElementById('editModal');
   
   // Load appointments on page load
   loadAppointments();
@@ -216,6 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+      URL.revokeObjectURL(url);
       
       showNotification('XML Downloaded Successfully');
     } catch (error) {
@@ -300,117 +303,210 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
+
+  // Edit form submission
+  editForm.addEventListener('submit', handleEditSubmit);
+  
+  // Close modal when clicking outside
+  window.addEventListener('click', (event) => {
+    if (event.target === editModal) {
+      closeEditModal();
+    }
+  });
 });
 
-// Function to render the table view
-function renderTableView(appointments) {
-  const appointmentsTable = document.getElementById('appointmentsTable');
-  
-  if (appointments.length === 0) {
-    appointmentsTable.innerHTML = `
-      <p class="text-center py-4">No appointments found</p>
-      ${document.getElementById('searchInput').value ? '<button class="btn btn-link clear-search">Clear search</button>' : ''}
-    `;
-    
-    const clearSearchBtn = appointmentsTable.querySelector('.clear-search');
-    if (clearSearchBtn) {
-      clearSearchBtn.addEventListener('click', () => {
-        document.getElementById('searchInput').value = '';
-        loadAppointments();
-      });
+// Global variable to track sort state
+let currentSort = {
+  column: null,
+  direction: 'asc'
+};
+
+// Function to sort appointments
+function sortAppointments(appointments, column) {
+  return [...appointments].sort((a, b) => {
+    let aValue = a[column];
+    let bValue = b[column];
+
+    // Handle null/undefined values
+    if (!aValue) aValue = '';
+    if (!bValue) bValue = '';
+
+    // Convert to lowercase for string comparison
+    if (typeof aValue === 'string') aValue = aValue.toLowerCase();
+    if (typeof bValue === 'string') bValue = bValue.toLowerCase();
+
+    if (column === 'appointmentDate') {
+      // Convert dates to timestamps for comparison
+      aValue = new Date(aValue).getTime();
+      bValue = new Date(bValue).getTime();
     }
-    
-    return;
-  }
-  
-  let tableHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th class="sortable" data-sort="fullName">Name <span class="sort-icon">↕</span></th>
-          <th>Contact</th>
-          <th>Email</th>
-          <th class="sortable" data-sort="service">Service <span class="sort-icon">↕</span></th>
-          <th class="sortable" data-sort="appointmentDate">Date <span class="sort-icon">↕</span></th>
-          <th>Time</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-  `;
-  
-  appointments.forEach((appointment) => {
-    tableHTML += `
-      <tr data-id="${appointment.id}">
-        <td>${escapeHtml(appointment.fullName)}</td>
-        <td>${escapeHtml(appointment.contactNumber)}</td>
-        <td>${escapeHtml(appointment.email)}</td>
-        <td>${escapeHtml(appointment.service)}</td>
-        <td>${escapeHtml(appointment.appointmentDate)}</td>
-        <td>${escapeHtml(appointment.appointmentTime)}</td>
-        <td class="action-buttons">
-          <button class="btn btn-sm delete-btn" onclick="deleteAppointment(${appointment.id})">Delete</button>
-        </td>
-      </tr>
-    `;
-  });
-  
-  tableHTML += `
-      </tbody>
-    </table>
-  `;
-  
-  appointmentsTable.innerHTML = tableHTML;
-  
-  // Store original order of appointments
-  const originalOrder = [...appointments];
-  
-  // Add sorting functionality only to sortable headers
-  const sortableHeaders = appointmentsTable.querySelectorAll('.sortable');
-  sortableHeaders.forEach(header => {
-    header.addEventListener('click', () => {
-      const sortField = header.dataset.sort;
-      const currentOrder = header.dataset.order || '';
-      
-      // Reset all other headers
-      sortableHeaders.forEach(h => {
-        if (h !== header) {
-          h.dataset.order = '';
-          h.querySelector('.sort-icon').textContent = '↕';
-        }
-      });
-      
-      // Cycle through: ascending -> descending -> default
-      let newOrder;
-      if (currentOrder === '') {
-        newOrder = 'asc';
-      } else if (currentOrder === 'asc') {
-        newOrder = 'desc';
-      } else {
-        // Reset to default order
-        appointments.splice(0, appointments.length, ...originalOrder);
-        header.dataset.order = '';
-        header.querySelector('.sort-icon').textContent = '↕';
-        renderTableView(appointments);
-        return;
-      }
-      
-      // Update clicked header
-      header.dataset.order = newOrder;
-      header.querySelector('.sort-icon').textContent = newOrder === 'asc' ? '↑' : '↓';
-      
-      // Sort the appointments
-      appointments.sort((a, b) => {
-        let comparison = 0;
-        if (sortField === 'appointmentDate') {
-          comparison = new Date(a[sortField]) - new Date(b[sortField]);
-        } else {
-          comparison = String(a[sortField]).localeCompare(String(b[sortField]));
-        }
-        return newOrder === 'asc' ? comparison : -comparison;
-      });
-      
-      renderTableView(appointments);
-    });
+
+    if (currentSort.direction === 'asc') {
+      return aValue > bValue ? 1 : -1;
+    } else {
+      return aValue < bValue ? 1 : -1;
+    }
   });
 }
+
+// Function to render appointments in table view
+function renderTableView(appointments) {
+  const tableContainer = document.getElementById('appointmentsTable');
+  if (!appointments || appointments.length === 0) {
+    tableContainer.innerHTML = '<p class="no-appointments">No appointments found</p>';
+    return;
+  }
+
+  const table = document.createElement('table');
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th data-sort="fullName" class="sortable ${currentSort.column === 'fullName' ? currentSort.direction : ''}">Name</th>
+        <th>Contact</th>
+        <th>Email</th>
+        <th data-sort="service" class="sortable ${currentSort.column === 'service' ? currentSort.direction : ''}">Service</th>
+        <th data-sort="appointmentDate" class="sortable ${currentSort.column === 'appointmentDate' ? currentSort.direction : ''}">Date</th>
+        <th>Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${appointments.map(appointment => `
+        <tr>
+          <td>${escapeHtml(appointment.fullName)}</td>
+          <td>${escapeHtml(appointment.contactNumber)}</td>
+          <td>${escapeHtml(appointment.email)}</td>
+          <td>${escapeHtml(appointment.service)}</td>
+          <td>${escapeHtml(appointment.appointmentDate)}</td>
+          <td>${escapeHtml(appointment.appointmentTime)}</td>
+          <td>
+            <div class="action-buttons">
+              <button type="button" class="btn-sm view-btn" onclick="openViewModal(${JSON.stringify(appointment).replace(/"/g, '&quot;')})">View</button>
+              <button type="button" class="btn-sm edit-btn" onclick="openEditModal(${JSON.stringify(appointment).replace(/"/g, '&quot;')})">Edit</button>
+              <button type="button" class="btn-sm delete-btn" onclick="deleteAppointment('${appointment.id}')">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('')}
+    </tbody>
+  `;
+
+  // Add click event listeners for sorting
+  table.querySelectorAll('th.sortable').forEach(th => {
+    th.style.cursor = 'pointer';
+    th.addEventListener('click', () => {
+      const column = th.dataset.sort;
+      if (currentSort.column === column) {
+        // If clicking the same column, toggle direction
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        // If clicking a new column, set it with ascending direction
+        currentSort.column = column;
+        currentSort.direction = 'asc';
+      }
+      // Re-render with sorted data
+      renderTableView(sortAppointments(appointments, column));
+    });
+  });
+
+  tableContainer.innerHTML = '';
+  tableContainer.appendChild(table);
+}
+
+// Function to handle edit form submission
+async function handleEditSubmit(event) {
+  event.preventDefault();
+  
+  try {
+    const formData = {
+      id: document.getElementById('editId').value,
+      fullName: document.getElementById('editFullName').value,
+      contactNumber: document.getElementById('editContactNumber').value,
+      email: document.getElementById('editEmail').value,
+      service: document.getElementById('editService').value,
+      appointmentDate: document.getElementById('editDate').value,
+      appointmentTime: document.getElementById('editTime').value,
+      notes: document.getElementById('editNotes').value
+    };
+
+    console.log('Sending update request with data:', formData); // Debug log
+
+    // Send update request to server with the correct path
+    const response = await fetch('/api/appointments/update.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    });
+
+    // Log the raw response for debugging
+    const rawResponse = await response.text();
+    console.log('Raw server response:', rawResponse);
+
+    let result;
+    try {
+      result = JSON.parse(rawResponse);
+    } catch (e) {
+      console.error('Failed to parse JSON response:', e);
+      throw new Error('Server returned invalid JSON');
+    }
+
+    console.log('Parsed server response:', result); // Debug log
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || 'Failed to update appointment');
+    }
+
+    // Close modal
+    document.getElementById('editModal').style.display = 'none';
+    
+    // Reload appointments to refresh the view
+    await loadAppointments();
+    showNotification('Appointment updated successfully');
+    
+  } catch (error) {
+    console.error('Error updating appointment:', error);
+    showNotification(error.message || 'Failed to update appointment', false);
+  }
+}
+
+// Function to close edit modal
+function closeEditModal() {
+  document.getElementById('editModal').style.display = 'none';
+}
+
+// Function to open edit modal
+function openEditModal(appointment) {
+  document.getElementById('editId').value = appointment.id;
+  document.getElementById('editFullName').value = appointment.fullName;
+  document.getElementById('editContactNumber').value = appointment.contactNumber;
+  document.getElementById('editEmail').value = appointment.email;
+  document.getElementById('editService').value = appointment.service;
+  document.getElementById('editDate').value = appointment.appointmentDate;
+  document.getElementById('editTime').value = appointment.appointmentTime;
+  document.getElementById('editNotes').value = appointment.notes || '';
+  
+  document.getElementById('editModal').style.display = 'flex';
+}
+
+// Function to open view modal
+function openViewModal(appointment) {
+  document.getElementById('viewName').textContent = appointment.fullName;
+  document.getElementById('viewService').textContent = appointment.service;
+  document.getElementById('viewNotes').textContent = appointment.notes || 'No additional notes';
+  
+  document.getElementById('viewModal').style.display = 'flex';
+}
+
+// Function to close view modal
+function closeViewModal() {
+  document.getElementById('viewModal').style.display = 'none';
+}
+
+// Make these functions global so they can be called from HTML
+window.openViewModal = openViewModal;
+window.closeViewModal = closeViewModal;
+window.openEditModal = openEditModal;
+window.closeEditModal = closeEditModal;
+window.deleteAppointment = deleteAppointment;

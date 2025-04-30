@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Appointment - Golden Aesthetics</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <a href="user-index.html" class="logo">Golden Aesthetics</a>
+        <ul class="nav-links">
+          <li><a href="user-index.html">Home</a></li>
+          <li><a href="user-booking.html" class="active">Book Appointment</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="booking-section">
+      <div class="container">
+        <div class="booking-header">
+          <h1>Book Your Appointment</h1>
+          <p>Fill out the form below to schedule your consultation with our experts.</p>
+        </div>
+
+        <div class="booking-form-container">
+          <form id="appointmentForm" class="booking-form">
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" name="fullName" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contactNumber">Contact Number</label>
+                <input type="tel" id="contactNumber" name="contactNumber" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="service">Service</label>
+              <select id="service" name="service" required>
+                <option value="" disabled selected>Select a service</option>
+                <!-- Facial Treatments -->
+                <optgroup label="Facial Treatments">
+                  <option value="Facial Treatments - Hypoallergenic Facial">Facial Treatments - Hypoallergenic Facial</option>
+                  <option value="Facial Treatments - Premium Whitening Facial">Facial Treatments - Premium Whitening Facial</option>
+                  <option value="Facial Treatments - Premium Age-Defy Facial">Facial Treatments - Premium Age-Defy Facial</option>
+                  <option value="Facial Treatments - Luxe Brightening Facial">Facial Treatments - Luxe Brightening Facial</option>
+                  <option value="Facial Treatments - Luxe Acne-Clear Facial">Facial Treatments - Luxe Acne-Clear Facial</option>
+                  <option value="Facial Treatments - Luxe Rejuvenation Facial">Facial Treatments - Luxe Rejuvenation Facial</option>
+                  <option value="Facial Treatments - Hydra-Oxyderm Facial">Facial Treatments - Hydra-Oxyderm Facial</option>
+                  <option value="Facial Treatments - Signature Golden Facial">Facial Treatments - Signature Golden Facial</option>
+                </optgroup>
+                <!-- Pico & Carbon Laser -->
+                <optgroup label="Pico & Carbon Laser">
+                  <option value="Pico & Carbon Laser - Acne Spot Pico Frosting">Pico & Carbon Laser - Acne Spot Pico Frosting</option>
+                  <option value="Pico & Carbon Laser - Black Doll Face">Pico & Carbon Laser - Black Doll Face</option>
+                  <option value="Pico & Carbon Laser - UA Carbon Laser Peel">Pico & Carbon Laser - UA Carbon Laser Peel</option>
+                  <option value="Pico & Carbon Laser - Black Carbon Laser Peel">Pico & Carbon Laser - Black Carbon Laser Peel</option>
+                  <option value="Pico & Carbon Laser - Elbow Pico White">Pico & Carbon Laser - Elbow Pico White</option>
+                  <option value="Pico & Carbon Laser - Knee Carbon Peel">Pico & Carbon Laser - Knee Carbon Peel</option>
+                  <option value="Pico & Carbon Laser - Butt Carbon Peel">Pico & Carbon Laser - Butt Carbon Peel</option>
+                  <option value="Pico & Carbon Laser - Tattoo Laser Removal">Pico & Carbon Laser - Tattoo Laser Removal</option>
+                </optgroup>
+                <!-- IV Treatments -->
+                <optgroup label="IV Treatments">
+                  <option value="IV Treatments - Opal Teen">IV Treatments - Opal Teen</option>
+                  <option value="IV Treatments - Placenta">IV Treatments - Placenta</option>
+                  <option value="IV Treatments - Collagen">IV Treatments - Collagen</option>
+                  <option value="IV Treatments - Vitamin C">IV Treatments - Vitamin C</option>
+                  <option value="IV Treatments - Vitamin B-Complex">IV Treatments - Vitamin B-Complex</option>
+                  <option value="IV Treatments - Slimming L-Carnitine">IV Treatments - Slimming L-Carnitine</option>
+                  <option value="IV Treatments - Topaz Ultra Detox">IV Treatments - Topaz Ultra Detox</option>
+                  <option value="IV Treatments - Sapphire Bright">IV Treatments - Sapphire Bright</option>
+                  <option value="IV Treatments - Ruby Rose White">IV Treatments - Ruby Rose White</option>
+                  <option value="IV Treatments - Jade Anti-Aging">IV Treatments - Jade Anti-Aging</option>
+                  <option value="IV Treatments - Diamond Clear">IV Treatments - Diamond Clear</option>
+                  <option value="IV Treatments - Emerald Premium">IV Treatments - Emerald Premium</option>
+                  <option value="IV Treatments - Pearl White">IV Treatments - Pearl White</option>
+                  <option value="IV Treatments - Premium Golden White">IV Treatments - Premium Golden White</option>
+                </optgroup>
+                <!-- Exiprolift Treatments -->
+                <optgroup label="Exiprolift Treatments">
+                  <option value="Exiprolift Treatments - Face">Exiprolift Treatments - Face</option>
+                  <option value="Exiprolift Treatments - Neck">Exiprolift Treatments - Neck</option>
+                  <option value="Exiprolift Treatments - Arms">Exiprolift Treatments - Arms</option>
+                  <option value="Exiprolift Treatments - Abdomen">Exiprolift Treatments - Abdomen</option>
+                  <option value="Exiprolift Treatments - Back">Exiprolift Treatments - Back</option>
+                </optgroup>
+                <!-- HIFU Treatments -->
+                <optgroup label="HIFU Treatments">
+                  <option value="HIFU Treatments - Face + Neck (7D HIFU)">HIFU Treatments - Face + Neck (7D HIFU)</option>
+                  <option value="HIFU Treatments - Face + Neck (Classic HIFU)">HIFU Treatments - Face + Neck (Classic HIFU)</option>
+                  <option value="HIFU Treatments - Whole Body (7D HIFU)">HIFU Treatments - Whole Body (7D HIFU)</option>
+                  <option value="HIFU Treatments - Whole Body (Classic HIFU)">HIFU Treatments - Whole Body (Classic HIFU)</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="appointmentDate">Date</label>
+                <input type="date" id="appointmentDate" name="appointmentDate" required>
+              </div>
+
+              <div class="form-group">
+                <label for="appointmentTime">Time</label>
+                <select id="appointmentTime" name="appointmentTime" required>
+                  <option value="" disabled selected>Select time</option>
+                  <option value="9:00 AM">9:00 AM</option>
+                  <option value="10:00 AM">10:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="1:00 PM">1:00 PM</option>
+                  <option value="2:00 PM">2:00 PM</option>
+                  <option value="3:00 PM">3:00 PM</option>
+                  <option value="4:00 PM">4:00 PM</option>
+                  <option value="5:00 PM">5:00 PM</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="notes">Additional Notes (Optional)</label>
+              <textarea id="notes" name="notes" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Book Appointment</button>
+          </form>
+        </div>
+
+        <div class="price-list-section">
+          <h2>Our Service Price List</h2>
+          <p class="section-subtitle">Summer Rollback Promo - 20% OFF!</p>
+          
+          <div class="price-category">
+            <h3>Facial Treatments</h3>
+            <div class="price-grid">
+              <div class="price-item">
+                <span class="service-name">Hypoallergenic Facial</span>
+                <div class="price-details">
+                  <span class="regular-price">₱549</span>
+                  <span class="promo-price">₱439</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Premium Whitening Facial</span>
+                <div class="price-details">
+                  <span class="regular-price">₱769</span>
+                  <span class="promo-price">₱615</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Premium Age-Defy Facial</span>
+                <div class="price-details">
+                  <span class="regular-price">₱769</span>
+                  <span class="promo-price">₱615</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Luxe Brightening Facial</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,099</span>
+                  <span class="promo-price">₱879</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Luxe Acne-Clear Facial</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,099</span>
+                  <span class="promo-price">₱879</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Luxe Rejuvenation Facial</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,099</span>
+                  <span class="promo-price">₱879</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Hydra-Oxyderm Facial</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,759</span>
+                  <span class="promo-price">₱1,407</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Signature Golden Facial</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,759</span>
+                  <span class="promo-price">₱1,407</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-category">
+            <h3>Exiprolift Treatments</h3>
+            <div class="price-grid">
+              <div class="price-item">
+                <span class="service-name">Face</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,199</span>
+                  <span class="promo-price">₱1,759</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Neck</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,099</span>
+                  <span class="promo-price">₱879</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Arms</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,749</span>
+                  <span class="promo-price">₱2,199</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Abdomen</span>
+                <div class="price-details">
+                  <span class="regular-price">₱3,849</span>
+                  <span class="promo-price">₱3,079</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Back</span>
+                <div class="price-details">
+                  <span class="regular-price">₱3,849</span>
+                  <span class="promo-price">₱3,079</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-category">
+            <h3>HIFU Treatments</h3>
+            <div class="price-grid">
+              <div class="price-item">
+                <span class="service-name">Face + Neck (7D HIFU)</span>
+                <div class="price-details">
+                  <span class="regular-price">₱3,959</span>
+                  <span class="promo-price">₱3,167</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Face + Neck (Classic HIFU)</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,749</span>
+                  <span class="promo-price">₱2,199</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Whole Body (7D HIFU)</span>
+                <div class="price-details">
+                  <span class="regular-price">₱31,680</span>
+                  <span class="promo-price">₱25,344</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Whole Body (Classic HIFU)</span>
+                <div class="price-details">
+                  <span class="regular-price">₱21,999</span>
+                  <span class="promo-price">₱17,599</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-category">
+            <h3>Pico & Carbon Laser Treatments</h3>
+            <div class="price-grid">
+              <div class="price-item">
+                <span class="service-name">Acne Spot Pico Frosting</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,650</span>
+                  <span class="promo-price">₱1,320</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Black Doll Face</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,199</span>
+                  <span class="promo-price">₱1,759</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">UA Carbon Laser Peel</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,199</span>
+                  <span class="promo-price">₱1,759</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Black Carbon Laser Peel</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,199</span>
+                  <span class="promo-price">₱1,759</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Elbow Pico White</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,199</span>
+                  <span class="promo-price">₱1,759</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Knee Carbon Peel</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,199</span>
+                  <span class="promo-price">₱1,759</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Butt Carbon Peel</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,750</span>
+                  <span class="promo-price">₱2,200</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Tattoo Laser Removal</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,199</span>
+                  <span class="promo-price">₱1,759</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-category">
+            <h3>IV Treatments</h3>
+            <div class="price-grid">
+              <div class="price-item">
+                <span class="service-name">Opal Teen</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,200</span>
+                  <span class="promo-price">₱527</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Placenta</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,099</span>
+                  <span class="promo-price">₱439</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Collagen</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,099</span>
+                  <span class="promo-price">₱439</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Vitamin C</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,099</span>
+                  <span class="promo-price">₱439</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Vitamin B-Complex</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,099</span>
+                  <span class="promo-price">₱479</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Slimming L-Carnitine</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,099</span>
+                  <span class="promo-price">₱479</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Topaz Ultra Detox</span>
+                <div class="price-details">
+                  <span class="regular-price">₱1,400</span>
+                  <span class="promo-price">₱790</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Sapphire Bright</span>
+                <div class="price-details">
+                  <span class="regular-price">₱2,600</span>
+                  <span class="promo-price">₱1,119</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Ruby Rose White</span>
+                <div class="price-details">
+                  <span class="regular-price">₱3,600</span>
+                  <span class="promo-price">₱1,583</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Jade Anti-Aging</span>
+                <div class="price-details">
+                  <span class="regular-price">₱3,800</span>
+                  <span class="promo-price">₱1,671</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Diamond Clear</span>
+                <div class="price-details">
+                  <span class="regular-price">₱4,000</span>
+                  <span class="promo-price">₱1,759</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Emerald Premium</span>
+                <div class="price-details">
+                  <span class="regular-price">₱4,200</span>
+                  <span class="promo-price">₱1,839</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Pearl White</span>
+                <div class="price-details">
+                  <span class="regular-price">₱4,200</span>
+                  <span class="promo-price">₱1,839</span>
+                </div>
+              </div>
+              <div class="price-item">
+                <span class="service-name">Premium Golden White </span>
+                <div class="price-details">
+                  <span class="regular-price">₱10,989</span>
+                  <span class="promo-price">₱8,791</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-note">
+            <p>* Packages are available in 5+1 and 10+3 deals. Installment options available.</p>
+            <p>* All prices shown include the 20% summer rollback discount.</p>
+          </div>
+        </div>
+
+        <div class="booking-info">
+          <h3>Important Information</h3>
+          <ul>
+            <li>Appointments can be rescheduled up to 24 hours before the scheduled time.</li>
+            <li>Please arrive 15 minutes before your appointment time for registration.</li>
+            <li>A consultation fee may apply for certain services.</li>
+            <li>For certain treatments, a patch test may be required 48 hours before your appointment.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Golden Aesthetics</h3>
+          <p>Expert aesthetic treatments tailored to enhance your unique features.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Email: contact@goldenaesthetics.com</p>
+          <p>Phone: (555) 123-4567</p>
+        </div>
+        <div class="footer-section">
+          <h3>Hours</h3>
+          <p>Monday - Friday: 9am - 7pm</p>
+          <p>Saturday: 10am - 4pm</p>
+          <p>Sunday: Closed</p>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Golden Aesthetics. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="notification" class="notification">
+    <div class="notification-content">
+      <p id="notificationMessage"></p>
+    </div>
+  </div>
+
+  <script src="js/booking.js"></script>
+</body>
+</html> 

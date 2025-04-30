@@ -6,8 +6,202 @@
   <title>Admin Dashboard - Golden Aesthetics</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Add Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <!-- Add SheetJS library -->
   <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+  <style>
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .logout-btn {
+      background-color: var(--color-danger);
+      color: var(--color-white);
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+    }
+    
+    .logout-btn:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+    }
+
+    /* Action buttons styles */
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-start;
+    }
+
+    .btn-sm {
+      padding: 0.25rem 0.75rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      min-width: 60px;
+    }
+
+    .edit-btn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .edit-btn:hover {
+      background-color: #218838;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+
+    .no-appointments {
+      text-align: center;
+      padding: 2rem;
+      color: var(--color-text);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    th {
+      background-color: var(--color-background);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    td {
+      color: var(--color-text);
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    /* Sortable column styles */
+    th.sortable {
+      cursor: pointer;
+      position: relative;
+      padding-right: 25px;
+    }
+
+    th.sortable:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* Single arrow styling */
+    th.sortable::after {
+      content: '↕';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+    }
+
+    th.sortable.asc::after,
+    th.sortable.desc::after {
+      color: var(--color-primary);
+    }
+
+    /* View Modal Styles */
+    .view-details {
+      padding: 1rem 0;
+    }
+
+    .view-details h3 {
+      color: var(--color-primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .view-details p {
+      margin: 0.5rem 0;
+      color: var(--color-text);
+    }
+
+    .notes-section {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .notes-section label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+
+    .notes-content {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      line-height: 1.5;
+      color: var(--color-text);
+      margin: 0;
+      padding: 0.5rem;
+      max-width: 100%;
+    }
+
+    /* Custom scrollbar for notes section */
+    .notes-section::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .notes-section::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    .notes-section::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .notes-section::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    /* View button style */
+    .view-btn {
+      background-color: #17a2b8;
+      color: white;
+    }
+
+    .view-btn:hover {
+      background-color: #138496;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -18,6 +212,7 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="booking.html">Book Appointment</a></li>
           <li><a href="admin.html" class="active">Admin</a></li>
+          <button class="logout-btn" id="logoutBtn">Logout</button>
         </ul>
       </div>
     </nav>
@@ -86,6 +281,186 @@
     </div>
   </div>
 
-  <script src="js/admin.js"></script>
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Edit Appointment</h2>
+      <form id="editForm">
+        <input type="hidden" id="editId">
+        <div class="form-group">
+          <label for="editFullName">Full Name</label>
+          <input type="text" id="editFullName" name="fullName" required>
+        </div>
+        <div class="form-group">
+          <label for="editContactNumber">Contact Number</label>
+          <input type="tel" id="editContactNumber" name="contactNumber" required>
+        </div>
+        <div class="form-group">
+          <label for="editEmail">Email</label>
+          <input type="email" id="editEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="editService">Service</label>
+          <select id="editService" name="service" required>
+            <option value="" disabled selected>Select a service</option>
+            <!-- Facial Treatments -->
+            <optgroup label="Facial Treatments">
+              <option value="Facial Treatments - Hypoallergenic Facial">Facial Treatments - Hypoallergenic Facial</option>
+              <option value="Facial Treatments - Premium Whitening Facial">Facial Treatments - Premium Whitening Facial</option>
+              <option value="Facial Treatments - Premium Age-Defy Facial">Facial Treatments - Premium Age-Defy Facial</option>
+              <option value="Facial Treatments - Luxe Brightening Facial">Facial Treatments - Luxe Brightening Facial</option>
+              <option value="Facial Treatments - Luxe Acne-Clear Facial">Facial Treatments - Luxe Acne-Clear Facial</option>
+              <option value="Facial Treatments - Luxe Rejuvenation Facial">Facial Treatments - Luxe Rejuvenation Facial</option>
+              <option value="Facial Treatments - Hydra-Oxyderm Facial">Facial Treatments - Hydra-Oxyderm Facial</option>
+              <option value="Facial Treatments - Signature BeautyProject Facial">Facial Treatments - Signature BeautyProject Facial</option>
+            </optgroup>
+            <!-- Pico & Carbon Laser -->
+            <optgroup label="Pico & Carbon Laser">
+              <option value="Pico & Carbon Laser - Acne Spot Pico Frosting">Pico & Carbon Laser - Acne Spot Pico Frosting</option>
+              <option value="Pico & Carbon Laser - Black Doll Face">Pico & Carbon Laser - Black Doll Face</option>
+              <option value="Pico & Carbon Laser - UA Carbon Laser Peel">Pico & Carbon Laser - UA Carbon Laser Peel</option>
+              <option value="Pico & Carbon Laser - Black Carbon Laser Peel">Pico & Carbon Laser - Black Carbon Laser Peel</option>
+              <option value="Pico & Carbon Laser - Elbow Pico White">Pico & Carbon Laser - Elbow Pico White</option>
+              <option value="Pico & Carbon Laser - Knee Carbon Peel">Pico & Carbon Laser - Knee Carbon Peel</option>
+              <option value="Pico & Carbon Laser - Butt Carbon Peel">Pico & Carbon Laser - Butt Carbon Peel</option>
+              <option value="Pico & Carbon Laser - Tattoo Laser Removal">Pico & Carbon Laser - Tattoo Laser Removal</option>
+            </optgroup>
+            <!-- IV Treatments -->
+            <optgroup label="IV Treatments">
+              <option value="IV Treatments - Opal Teen">IV Treatments - Opal Teen</option>
+              <option value="IV Treatments - Placenta">IV Treatments - Placenta</option>
+              <option value="IV Treatments - Collagen">IV Treatments - Collagen</option>
+              <option value="IV Treatments - Vitamin C">IV Treatments - Vitamin C</option>
+              <option value="IV Treatments - Vitamin B-Complex">IV Treatments - Vitamin B-Complex</option>
+              <option value="IV Treatments - Slimming L-Carnitine">IV Treatments - Slimming L-Carnitine</option>
+              <option value="IV Treatments - Topaz Ultra Detox">IV Treatments - Topaz Ultra Detox</option>
+              <option value="IV Treatments - Sapphire Bright">IV Treatments - Sapphire Bright</option>
+              <option value="IV Treatments - Ruby Rose White">IV Treatments - Ruby Rose White</option>
+              <option value="IV Treatments - Jade Anti-Aging">IV Treatments - Jade Anti-Aging</option>
+              <option value="IV Treatments - Diamond Clear">IV Treatments - Diamond Clear</option>
+              <option value="IV Treatments - Emerald Premium">IV Treatments - Emerald Premium</option>
+              <option value="IV Treatments - Pearl White">IV Treatments - Pearl White</option>
+              <option value="IV Treatments - Beauty White Project">IV Treatments - Beauty White Project</option>
+            </optgroup>
+            <!-- Exiprolift Treatments -->
+            <optgroup label="Exiprolift Treatments">
+              <option value="Exiprolift Treatments - Face">Exiprolift Treatments - Face</option>
+              <option value="Exiprolift Treatments - Neck">Exiprolift Treatments - Neck</option>
+              <option value="Exiprolift Treatments - Arms">Exiprolift Treatments - Arms</option>
+              <option value="Exiprolift Treatments - Abdomen">Exiprolift Treatments - Abdomen</option>
+              <option value="Exiprolift Treatments - Back">Exiprolift Treatments - Back</option>
+            </optgroup>
+            <!-- HIFU Treatments -->
+            <optgroup label="HIFU Treatments">
+              <option value="HIFU Treatments - Face + Neck (7D HIFU)">HIFU Treatments - Face + Neck (7D HIFU)</option>
+              <option value="HIFU Treatments - Face + Neck (Classic HIFU)">HIFU Treatments - Face + Neck (Classic HIFU)</option>
+              <option value="HIFU Treatments - Whole Body (7D HIFU)">HIFU Treatments - Whole Body (7D HIFU)</option>
+              <option value="HIFU Treatments - Whole Body (Classic HIFU)">HIFU Treatments - Whole Body (Classic HIFU)</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="editDate">Date</label>
+            <input type="date" id="editDate" name="appointmentDate" required>
+          </div>
+          <div class="form-group">
+            <label for="editTime">Time</label>
+            <select id="editTime" name="appointmentTime" required>
+              <option value="" disabled selected>Select time</option>
+              <option value="9:00 AM">9:00 AM</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="11:00 AM">11:00 AM</option>
+              <option value="1:00 PM">1:00 PM</option>
+              <option value="2:00 PM">2:00 PM</option>
+              <option value="3:00 PM">3:00 PM</option>
+              <option value="4:00 PM">4:00 PM</option>
+              <option value="5:00 PM">5:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="editNotes">Additional Notes</label>
+          <textarea id="editNotes" name="notes" rows="3"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeEditModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Notes Modal -->
+  <div id="viewModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>View Notes</h2>
+      <div class="view-details">
+        <h3 id="viewName"></h3>
+        <p id="viewService"></p>
+        <div class="notes-section">
+          <label>Additional Notes:</label>
+          <p id="viewNotes" class="notes-content"></p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" onclick="closeViewModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Session security check
+    function checkAuth() {
+      if (localStorage.getItem('isAuthenticated') !== 'true') {
+        // Clear any existing authentication
+        localStorage.removeItem('isAuthenticated');
+        // Redirect to login page
+        window.location.replace('admin-login.html');
+        return false;
+      }
+      return true;
+    }
+
+    // Check authentication on page load
+    if (!checkAuth()) {
+      // Prevent any further execution if not authenticated
+      throw new Error('Not authenticated');
+    }
+
+    // Check authentication periodically (every 30 seconds)
+    setInterval(checkAuth, 30000);
+
+    // Handle browser back/forward buttons
+    window.onpopstate = function(event) {
+      if (!checkAuth()) {
+        // Replace current history entry with login page
+        history.replaceState(null, '', 'admin-login.html');
+      }
+    };
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      // Clear authentication
+      localStorage.removeItem('isAuthenticated');
+      
+      // Replace current history entry with login page
+      history.replaceState(null, '', 'admin-login.html');
+      
+      // Redirect to login page
+      window.location.replace('admin-login.html');
+    });
+
+    // Load admin.js after authentication check
+    const script = document.createElement('script');
+    script.src = 'js/admin.js';
+    script.onload = function() {
+      // Initialize admin features after script is loaded
+      if (typeof loadAppointments === 'function') {
+        loadAppointments();
+      }
+    };
+    document.body.appendChild(script);
+  </script>
 </body>
 </html>
